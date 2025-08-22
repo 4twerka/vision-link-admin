@@ -55,18 +55,20 @@ const Index = () => {
         {/* Header */}
         <div className="flex items-start gap-4">
           <div className="w-12 h-12 rounded-full bg-muted overflow-hidden">
+            {/* {campaignData?.profileImage || ""} */}
             <img 
-              src={campaignData?.profileImage || ""} 
+              src="/avatarOnl.jpg" 
               alt="Profile"
               className="w-full h-full object-cover"
             />
           </div>
           <div className="flex-1">
-            <h1 className="text-2xl font-bold mb-2">{campaignData?.title || "Loading..."}</h1>
+            <h1 className="text-2xl font-bold mb-2">{campaignData?.title || "Always Love Lana"}</h1>
             <div className="text-sm text-muted-foreground space-y-1">
-              <p>{campaignData?.creators}</p>
-              <p>Created at: {campaignData?.createdAt}</p>
-              <p className="text-emerald-600">Updated at: {campaignData?.updatedAt}</p>
+              {/* {campaignData?.creators} */}
+              <p>Always_love_lana</p>
+              {/* <p>Created at: {campaignData?.createdAt}</p> */}
+              {/* <p className="text-emerald-600">Updated at: {campaignData?.updatedAt}</p> */}
             </div>
           </div>
         </div>
@@ -79,7 +81,7 @@ const Index = () => {
               <Users className="h-4 w-4 text-emerald-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">{campaignData?.totalSubscribed || 0}</div>
+              <div className="text-3xl font-bold">{campaignData?.totalSubscribed || 400}</div>
             </CardContent>
           </Card>
           <Card>
@@ -88,7 +90,7 @@ const Index = () => {
               <MousePointer className="h-4 w-4 text-emerald-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">{campaignData?.totalClicked || 0}</div>
+              <div className="text-3xl font-bold">{campaignData?.totalClicked || 125}</div>
             </CardContent>
           </Card>
         </div>
@@ -98,7 +100,8 @@ const Index = () => {
           <CardContent className="pt-6">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Link className="h-4 w-4" />
-              <span>{campaignData?.onlyFansLink}</span>
+              {/* {campaignData?.onlyFansLink} */}
+              <a href="https://onlyfans.com/always_love_lana/c1">Link Onlyfans</a>
             </div>
           </CardContent>
         </Card>
