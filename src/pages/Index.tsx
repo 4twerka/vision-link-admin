@@ -67,7 +67,8 @@ const Index = () => {
             <div className="text-sm text-muted-foreground space-y-1">
               {/* {campaignData?.creators} */}
               <p>Always_love_lana</p>
-              {/* <p>Created at: {campaignData?.createdAt}</p> */}
+              {/* {campaignData?.createdAt} */}
+              <p>Created at: 21.08.2025</p>
               {/* <p className="text-emerald-600">Updated at: {campaignData?.updatedAt}</p> */}
             </div>
           </div>
@@ -81,7 +82,7 @@ const Index = () => {
               <Users className="h-4 w-4 text-emerald-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">{campaignData?.totalSubscribed || 400}</div>
+              <div className="text-3xl font-bold">{campaignData?.totalSubscribed || 0}</div>
             </CardContent>
           </Card>
           <Card>
@@ -90,7 +91,7 @@ const Index = () => {
               <MousePointer className="h-4 w-4 text-emerald-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">{campaignData?.totalClicked || 125}</div>
+              <div className="text-3xl font-bold">{campaignData?.totalClicked || 0}</div>
             </CardContent>
           </Card>
         </div>
@@ -101,7 +102,7 @@ const Index = () => {
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Link className="h-4 w-4" />
               {/* {campaignData?.onlyFansLink} */}
-              <a href="https://onlyfans.com/always_love_lana/c1">Link Onlyfans</a>
+              <a href="https://onlyfans.com/always_love_lana/c1">https://onlyfans.com/always_love_lana/c1</a>
             </div>
           </CardContent>
         </Card>
