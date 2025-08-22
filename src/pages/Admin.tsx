@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { Lock, Save, Eye, EyeOff } from "lucide-react";
+import { getCampaignData, saveCampaignData, CampaignData } from "@/lib/firebase";
 
 const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -17,7 +18,7 @@ const Admin = () => {
   const ADMIN_PASSWORD = "l1a2n3a4";
 
   // Campaign data state
-  const [campaignData, setCampaignData] = useState({
+  const [campaignData, setCampaignData] = useState<CampaignData>({
     title: "Campaign Metrics for may**********",
     creators: "@Lisa_Top_assist @kitty_kateee april 🌹",
     createdAt: "4 April 2025",
@@ -27,6 +28,19 @@ const Admin = () => {
     onlyFansLink: "https://onlyfans.com/may**********/c1586",
     profileImage: "https://onlystruggles.s3.eu-west-2.amazonaws.com/sextforce/onlyfans/643de02fb29bef99dffc519c/avatar/q82z7hc5qw1ywrnu6c7ovahijpsfokdf1755685032/thumb.jpeg"
   });
+
+  // Load campaign data from Firebase when authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      const loadData = async () => {
+        const data = await getCampaignData();
+        if (data) {
+          setCampaignData(data);
+        }
+      };
+      loadData();
+    }
+  }, [isAuthenticated]);
 
   const handleLogin = () => {
     if (password === ADMIN_PASSWORD) {
@@ -44,12 +58,35 @@ const Admin = () => {
     }
   };
 
-  const handleSave = () => {
-    // In a real app, this would save to a database
-    toast({
-      title: "Success",
-      description: "Campaign data updated successfully",
-    });
+  const handleSave = async () => {
+    // Update the updatedAt timestamp
+    const updatedData = {
+      ...campaignData,
+      updatedAt: new Date().toLocaleString('en-GB', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      })
+    };
+    
+    const success = await saveCampaignData(updatedData);
+    
+    if (success) {
+      setCampaignData(updatedData);
+      toast({
+        title: "Success",
+        description: "Campaign data updated successfully",
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to save campaign data",
+        variant: "destructive",
+      });
+    }
   };
 
   if (!isAuthenticated) {

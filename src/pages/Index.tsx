@@ -1,8 +1,19 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { Users, MousePointer, Link } from "lucide-react";
+import { useState, useEffect } from "react";
+import { getCampaignData, CampaignData } from "@/lib/firebase";
 
 const Index = () => {
+  const [campaignData, setCampaignData] = useState<CampaignData | null>(null);
+
+  useEffect(() => {
+    const loadCampaignData = async () => {
+      const data = await getCampaignData();
+      setCampaignData(data);
+    };
+    loadCampaignData();
+  }, []);
   // Sample data based on the original dashboard
   const lineChartData = [
     { date: '04/04', subscribers: 0, clicks: 0 },
@@ -45,17 +56,17 @@ const Index = () => {
         <div className="flex items-start gap-4">
           <div className="w-12 h-12 rounded-full bg-muted overflow-hidden">
             <img 
-              src="https://onlystruggles.s3.eu-west-2.amazonaws.com/sextforce/onlyfans/643de02fb29bef99dffc519c/avatar/q82z7hc5qw1ywrnu6c7ovahijpsfokdf1755685032/thumb.jpeg" 
+              src={campaignData?.profileImage || ""} 
               alt="Profile"
               className="w-full h-full object-cover"
             />
           </div>
           <div className="flex-1">
-            <h1 className="text-2xl font-bold mb-2">Campaign Metrics for may**********</h1>
+            <h1 className="text-2xl font-bold mb-2">{campaignData?.title || "Loading..."}</h1>
             <div className="text-sm text-muted-foreground space-y-1">
-              <p>@Lisa_Top_assist @kitty_kateee april 🌹</p>
-              <p>Created at: 4 April 2025</p>
-              <p className="text-emerald-600">Updated at: 22 August 2025 09:40 am</p>
+              <p>{campaignData?.creators}</p>
+              <p>Created at: {campaignData?.createdAt}</p>
+              <p className="text-emerald-600">Updated at: {campaignData?.updatedAt}</p>
             </div>
           </div>
         </div>
@@ -68,7 +79,7 @@ const Index = () => {
               <Users className="h-4 w-4 text-emerald-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">96</div>
+              <div className="text-3xl font-bold">{campaignData?.totalSubscribed || 0}</div>
             </CardContent>
           </Card>
           <Card>
@@ -77,7 +88,7 @@ const Index = () => {
               <MousePointer className="h-4 w-4 text-emerald-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">264</div>
+              <div className="text-3xl font-bold">{campaignData?.totalClicked || 0}</div>
             </CardContent>
           </Card>
         </div>
@@ -87,7 +98,7 @@ const Index = () => {
           <CardContent className="pt-6">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Link className="h-4 w-4" />
-              <span>https://onlyfans.com/may**********/c1586</span>
+              <span>{campaignData?.onlyFansLink}</span>
             </div>
           </CardContent>
         </Card>
